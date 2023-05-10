@@ -11,7 +11,7 @@ RUN \
 
 FROM ubuntu:20.04
 
-ARG APPIUM_VERSION="1.8.1"
+ARG APPIUM_VERSION="1.22.3"
 
 RUN \
     apt update && \
@@ -64,7 +64,7 @@ ARG SDCARD_SIZE="500"
 ARG USERDATA_SIZE="500"
 
 RUN \
-	curl -o sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
+	curl -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip && \
 	mkdir -p /opt/android-sdk-linux /root/.config/Android\ Open\ Source\ Project/ && \
 	unzip -q sdk-tools.zip -d /opt/android-sdk-linux && \
 	rm sdk-tools.zip && \
