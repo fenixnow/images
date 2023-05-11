@@ -25,6 +25,7 @@ RUN \
 	    openjdk-8-jdk-headless \
 	    unzip \
 	    xvfb \
+	    wget \
 	    libpulse0 \
 		libxcomposite1 \
 		libxcursor1 \
