@@ -72,8 +72,13 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 	rm /tmp/cmdline-tools.zip && \
 	mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest 
 
+RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "emulator"
+RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "tools" "platform-tools"
+RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "$BUILD_TOOLS"
+RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;$PLATFORM"
+RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "$EMULATOR_IMAGE"
+	
 RUN \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "emulator" "tools" "platform-tools" "$BUILD_TOOLS" "platforms;$PLATFORM" "$EMULATOR_IMAGE" && \
 	mksdcard "$SDCARD_SIZE"M sdcard.img && \
 	echo "no" | ( \
 	    ([ -n "$ANDROID_DEVICE" ] && avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --device "$ANDROID_DEVICE" --sdcard /sdcard.img ) || \
