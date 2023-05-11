@@ -22,7 +22,7 @@ RUN \
 	    curl \
 	    iproute2 \
 	    nodejs \
-	    openjdk-11-jdk-headless \
+	    openjdk-11-jdk \
 	    unzip \
 	    xvfb \
 	    wget \
@@ -38,6 +38,10 @@ RUN \
 	    libglib2.0-0 && \
     apt-get clean && \
     rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
+
+# Set default java version
+RUN update-alternatives --set java  /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+RUN update-alternatives --set javac /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
 
 RUN cd / && npm install --prefix ./opt/ appium@$APPIUM_VERSION
 
