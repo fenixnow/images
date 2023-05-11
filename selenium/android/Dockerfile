@@ -68,9 +68,9 @@ ARG USERDATA_SIZE="64"
 RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" && \
 	mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
 	mkdir ${ANDROID_SDK_ROOT}/platforms && \
-	wget -O /tmp/cmdline-tools.zip -t 5 "${SDK_TOOLS_URL}" && \
-	unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_SDK_ROOT} && \
-	rm /tmp/cmdline-tools.zip
+	wget -O cmdline-tools.zip -t 5 "${SDK_TOOLS_URL}" && \
+	unzip -q cmdline-tools.zip -d ${ANDROID_SDK_ROOT} && \
+	rm cmdline-tools.zip
 	
 RUN echo y | sdkmanager --licenses
 RUN echo y | sdkmanager "emulator"
