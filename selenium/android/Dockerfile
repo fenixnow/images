@@ -68,15 +68,13 @@ ARG USERDATA_SIZE="64"
 RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" && \
 	mkdir -p ${ANDROID_HOME}/cmdline-tools && \
 	mkdir ${ANDROID_HOME}/platforms && \
-	mkdir ${ANDROID_HOME}/ndk && \
 	wget -O /tmp/cmdline-tools.zip -t 5 "${SDK_TOOLS_URL}" && \
 	unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools && \
 	rm /tmp/cmdline-tools.zip && \
-	mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest \
-	echo yes | ${CMDLINE_TOOLS_ROOT}/sdkmanager --licenses
+	mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest 
 
 RUN \
-	${CMDLINE_TOOLS_ROOT}/sdkmanager "emulator" "tools" "platform-tools" "$BUILD_TOOLS" "platforms;$PLATFORM" "$EMULATOR_IMAGE" && \
+	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "emulator" "tools" "platform-tools" "$BUILD_TOOLS" "platforms;$PLATFORM" "$EMULATOR_IMAGE" && \
 	mksdcard "$SDCARD_SIZE"M sdcard.img && \
 	echo "no" | ( \
 	    ([ -n "$ANDROID_DEVICE" ] && avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --device "$ANDROID_DEVICE" --sdcard /sdcard.img ) || \
