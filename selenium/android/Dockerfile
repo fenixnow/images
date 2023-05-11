@@ -71,8 +71,6 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 	wget -O cmdline-tools.zip -t 5 "${SDK_TOOLS_URL}" && \
 	unzip -q cmdline-tools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
 	mv "${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools" "${ANDROID_SDK_ROOT}/cmdline-tools/tools" && \
-	cd ${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin && \
-	ls && \
 	rm cmdline-tools.zip
 	
 RUN echo y | sdkmanager --licenses
