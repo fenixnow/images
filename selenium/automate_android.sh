@@ -31,7 +31,7 @@ validate_android_version(){
     type=${2:-"default"}
     abi=${3:-"x86"}
     avd_name="android$version-1"
-    build_tools="build-tools;29.0.2"
+    build_tools="build-tools;33.0.2"
     replace_img="y"
     case "$version" in
 	4.4)
@@ -164,7 +164,7 @@ cp -r ../static/chrome/devtools "$TMP_DIR/devtools"
 appium_version=$(request_answer "Specify Appium version:" "1.22.3")
 
 until [ "$?" -ne 0 ]; do
-    android_image_type=$(request_answer "Specify Android image type (possible values: \"default\", \"google_apis\", \"google_apis_playstore\", \"android-tv\", \"android-wear\"):" "default")
+    android_image_type=$(request_answer "Specify Android image type (possible values: \"default\", \"google_apis\", \"google_apis_playstore\", \"android-tv\", \"android-wear\"):" "google_apis_playstore")
     if validate_android_image_type "$android_image_type"; then
         break
     fi
@@ -176,7 +176,7 @@ until [ "$?" -ne 0 ]; do
     fi
 done
 until [ "$?" -ne 0 ]; do
-    android_version=$(request_answer "Specify Android version:" "8.1")
+    android_version=$(request_answer "Specify Android version:" "11.0")
     if validate_android_version "$android_version" "$android_image_type" "$android_abi"; then
         break
     fi
@@ -187,8 +187,8 @@ sed -i.bak "s|@AVD_NAME@|$avd_name|g" "$TMP_DIR/entrypoint.sh"
 sed -i.bak "s|@PLATFORM@|$platform|g" "$TMP_DIR/entrypoint.sh"
 
 android_device=$(request_answer "Specify device preset name if needed (e.g. \"Nexus 4\"):")
-sdcard_size=$(request_answer "Specify SD card size, Mb:" 500)
-userdata_size=$(request_answer "Specify userdata.img size, Mb:" 500)
+sdcard_size=$(request_answer "Specify SD card size, Mb:" 64)
+userdata_size=$(request_answer "Specify userdata.img size, Mb:" 64)
 
 image_name="android"
 default_tag="$android_version"
@@ -209,7 +209,7 @@ if [ -n "$chromedriver_version" ]; then
     fi
 fi
 
-tag=$(request_answer "Specify image tag:" "selenoid/$image_name:$default_tag")
+tag=$(request_answer "Specify image tag:" "browsers/$image_name:$default_tag")
 need_quickboot=$(request_answer "Add Android quick boot snapshot?" "y")
 
 if [ -n "$chromedriver_version" ]; then
