@@ -76,7 +76,7 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 RUN echo y | sdkmanager --licenses
 RUN echo y | sdkmanager "emulator"
 RUN echo y | sdkmanager "tools" "platform-tools"
-RUN echo y | sdkmanager "$BUILD_TOOLS"
+# RUN echo y | sdkmanager "$BUILD_TOOLS"
 RUN echo y | sdkmanager "platforms;$PLATFORM"
 RUN echo y | sdkmanager "$EMULATOR_IMAGE"
 	
