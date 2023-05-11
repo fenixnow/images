@@ -22,7 +22,7 @@ RUN \
 	    curl \
 	    iproute2 \
 	    nodejs \
-	    openjdk-8-jdk-headless \
+	    openjdk-11-jdk \
 	    unzip \
 	    xvfb \
 	    wget \
