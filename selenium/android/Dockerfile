@@ -48,14 +48,15 @@ COPY --from=go /devtools/devtools /usr/bin/
 
 # Android SDK
 ENV ANDROID_HOME /opt/android-sdk-linux
-ENV PATH /opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/tools/bin:/opt/android-sdk-linux/emulator:$PATH
+ENV CMDLINE_TOOLS_ROOT "${ANDROID_HOME}/cmdline-tools/latest/bin"
+ENV PATH ${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/emulator:$PATH
 ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/gles_swiftshader:${ANDROID_HOME}/emulator/lib64/qt/lib:${ANDROID_HOME}/emulator/lib64/vulkan:${LD_LIBRARY_PATH}
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 ARG ANDROID_DEVICE=""
 ARG REPLACE_IMG="y"
 ARG AVD_NAME="android6.0-1"
-ARG BUILD_TOOLS="build-tools;23.0.1"
+ARG BUILD_TOOLS="build-tools;33.0.2"
 ARG PLATFORM="android-23"
 ARG EMULATOR_IMAGE="system-images;android-23;default;x86"
 ARG EMULATOR_IMAGE_TYPE="default"
@@ -63,15 +64,18 @@ ARG ANDROID_ABI="x86"
 ARG SDCARD_SIZE="500"
 ARG USERDATA_SIZE="500"
 
-RUN \
-	curl -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip && \
-	mkdir -p /opt/android-sdk-linux /root/.config/Android\ Open\ Source\ Project/ && \
-	unzip -q sdk-tools.zip -d /opt/android-sdk-linux && \
-	rm sdk-tools.zip && \
-	yes | sdkmanager --licenses
+RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" && \
+	mkdir -p ${ANDROID_HOME}/cmdline-tools && \
+	mkdir ${ANDROID_HOME}/platforms && \
+	mkdir ${ANDROID_HOME}/ndk && \
+	wget -O /tmp/cmdline-tools.zip -t 5 "${SDK_TOOLS_URL}" && \
+	unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools && \
+	rm /tmp/cmdline-tools.zip && \
+	mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
+	yes | ${CMDLINE_TOOLS_ROOT}/sdkmanager --licenses
 
 RUN \
-	sdkmanager "emulator" "tools" "platform-tools" "$BUILD_TOOLS" "platforms;$PLATFORM" "$EMULATOR_IMAGE" && \
+	${CMDLINE_TOOLS_ROOT}/sdkmanager "emulator" "tools" "platform-tools" "$BUILD_TOOLS" "platforms;$PLATFORM" "$EMULATOR_IMAGE" && \
 	mksdcard "$SDCARD_SIZE"M sdcard.img && \
 	echo "no" | ( \
 	    ([ -n "$ANDROID_DEVICE" ] && avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --device "$ANDROID_DEVICE" --sdcard /sdcard.img ) || \
