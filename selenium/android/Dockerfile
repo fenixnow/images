@@ -69,9 +69,8 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 	mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
 	mkdir ${ANDROID_SDK_ROOT}/platforms && \
 	wget -O /tmp/cmdline-tools.zip -t 5 "${SDK_TOOLS_URL}" && \
-	unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
-	rm /tmp/cmdline-tools.zip && \
-	mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools
+	unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_SDK_ROOT} && \
+	rm /tmp/cmdline-tools.zip
 	
 RUN echo y | sdkmanager --licenses
 RUN echo y | sdkmanager "emulator"
