@@ -38,10 +38,6 @@ RUN \
     apt-get clean && \
     rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
 
-# Set default java version
-RUN update-alternatives --set java  /usr/lib/jvm/java-11-openjdk-amd64/bin/java
-RUN update-alternatives --set javac /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
-
 RUN cd / && npm install --prefix ./opt/ appium@$APPIUM_VERSION
 
 COPY android.conf /etc/ld.so.conf.d/
@@ -79,8 +75,8 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 RUN echo y | sdkmanager --licenses
 RUN echo y | sdkmanager "emulator"
 RUN echo y | sdkmanager "tools" "platform-tools"
-RUN echo y | sdkmanager "$BUILD_TOOLS"
-RUN echo y | sdkmanager "platforms;$PLATFORM"
+# RUN echo y | sdkmanager "$BUILD_TOOLS"
+# RUN echo y | sdkmanager "platforms;$PLATFORM"
 RUN echo y | sdkmanager "$EMULATOR_IMAGE"
 	
 RUN mksdcard "$SDCARD_SIZE"M sdcard.img
