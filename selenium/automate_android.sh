@@ -31,7 +31,7 @@ validate_android_version(){
     type=${2:-"default"}
     abi=${3:-"x86"}
     avd_name="android$version-1"
-    build_tools="build-tools;30.0.3"
+    build_tools="build-tools;33.0.2"
     replace_img="y"
     case "$version" in
 	4.4)
