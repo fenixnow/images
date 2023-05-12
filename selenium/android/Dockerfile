@@ -15,8 +15,7 @@ ARG APPIUM_VERSION="1.22.3"
 
 RUN \
     apt update && \
-    apt remove -y libcurl4 && \
-    apt install -y apt-transport-https ca-certificates tzdata locales libcurl4 curl gnupg && \
+    apt install -y apt-transport-https ca-certificates tzdata locales curl gnupg && \
 	curl --silent --location https://deb.nodesource.com/setup_16.x | bash - && \
 	apt install -y --no-install-recommends \
 	    curl \
