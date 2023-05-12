@@ -21,7 +21,7 @@ RUN \
 	    curl \
 	    iproute2 \
 	    nodejs \
-	    openjdk-8-jdk \
+	    openjdk-11-jdk \
 	    unzip \
 	    xvfb \
 	    wget \
@@ -74,7 +74,7 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 	
 RUN echo y | sdkmanager --licenses
 RUN echo y | sdkmanager "emulator"
-RUN echo y | sdkmanager "tools" "platform-tools"
+RUN echo y | sdkmanager  "cmdline-tools;latest" "platform-tools"
 RUN echo y | sdkmanager "$BUILD_TOOLS"
 RUN echo y | sdkmanager "platforms;$PLATFORM"
 RUN echo y | sdkmanager "$EMULATOR_IMAGE"
