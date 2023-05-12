@@ -235,7 +235,7 @@ docker build -t "$tmp_tag" \
 
 if [ "$need_quickboot" == "y" ]; then
     id=$(docker run -e CHROME_MOBILE="$chrome_mobile" -d --privileged "$tmp_tag")
-    sleep 120
+    sleep 180
     docker exec "$id" "/usr/bin/emulator-snapshot.sh"
     sleep 60 # Wait for snapshot to save
     docker commit "$id" "$tag"
