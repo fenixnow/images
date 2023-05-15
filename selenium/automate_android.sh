@@ -161,16 +161,16 @@ mkdir -p "$TMP_DIR"
 cp android/entrypoint.sh "$TMP_DIR/entrypoint.sh"
 cp -r ../static/chrome/devtools "$TMP_DIR/devtools"
 
-appium_version=$(request_answer "Specify Appium version:" "1.22.3")
+appium_version=$(request_answer "Specify Appium version:" "2.0.0-beta.66")
 
 until [ "$?" -ne 0 ]; do
-    android_image_type=$(request_answer "Specify Android image type (possible values: \"default\", \"google_apis\", \"google_apis_playstore\", \"android-tv\", \"android-wear\"):" "google_apis_playstore")
+    android_image_type=$(request_answer "Specify Android image type (possible values: \"default\", \"google_apis\", \"google_apis_playstore\", \"android-tv\", \"android-wear\"):" "default")
     if validate_android_image_type "$android_image_type"; then
         break
     fi
 done
 until [ "$?" -ne 0 ]; do
-    android_abi=$(request_answer "Specify Application Binary Interface (possible values: \"armeabi-v7a\", \"arm64-v8a\", \"x86\", \"x86_64\"):" "x86")
+    android_abi=$(request_answer "Specify Application Binary Interface (possible values: \"armeabi-v7a\", \"arm64-v8a\", \"x86\", \"x86_64\"):" "x86_64")
     if validate_android_abi "$android_abi"; then
         break
     fi
@@ -186,7 +186,7 @@ emulator_image_type=${emulator_image_info[2]}
 sed -i.bak "s|@AVD_NAME@|$avd_name|g" "$TMP_DIR/entrypoint.sh"
 sed -i.bak "s|@PLATFORM@|$platform|g" "$TMP_DIR/entrypoint.sh"
 
-android_device=$(request_answer "Specify device preset name if needed (e.g. \"Nexus 4\"):")
+android_device=$(request_answer "Specify device preset name if needed (e.g. \"Nexus 4\"): "Nexus 4")
 sdcard_size=$(request_answer "Specify SD card size, Mb:" 64)
 userdata_size=$(request_answer "Specify userdata.img size, Mb:" 64)
 
