@@ -26,7 +26,6 @@ RUN \
 	    unzip \
 	    xvfb \
 	    wget \
-	    npm \
 	    nodejs \
 	    libpulse0 \
 		libxcomposite1 \
