@@ -30,7 +30,7 @@ validate_android_version(){
     version="$1"
     type=${2:-"default"}
     abi=${3:-"x86"}
-    avd_name="android$version-1"
+    avd_name="android_${version//./_}"
     build_tools="build-tools;33.0.2"
     replace_img="y"
     case "$version" in
