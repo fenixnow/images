@@ -18,7 +18,7 @@ ARG APPIUM_VERSION="1.22.3"
 RUN \
     apt update && \
     apt install -y apt-transport-https ca-certificates tzdata locales curl gnupg && \
-	curl --silent --location https://deb.nodesource.com/setup_16.x | bash - && \
+# 	curl --silent --location https://deb.nodesource.com/setup_16.x | bash - && \
 	apt install -y --no-install-recommends \
 	    curl \
 	    iproute2 \
@@ -43,7 +43,7 @@ RUN \
 RUN cd / && npm install --prefix ./opt/ appium@$APPIUM_VERSION
 RUN /opt/node_modules/.bin/appium driver install uiautomator2
 
-COPY android.conf /etc/ld.so.conf.d/
+# COPY android.conf /etc/ld.so.conf.d/
 COPY fluxbox/aerokube /usr/share/fluxbox/styles/
 COPY fluxbox/init /root/.fluxbox/
 COPY fluxbox/aerokube.png /usr/share/images/fluxbox/
