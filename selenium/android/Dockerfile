@@ -43,7 +43,7 @@ RUN \
 
 WORKDIR /
 
-RUN npm install -g npm@latest && npm install -g appium@$APPIUM_VERSION
+RUN npm install -g npm@latest && npm update && npm install -g appium@$APPIUM_VERSION
 RUN appium driver install uiautomator2
 
 # COPY android.conf /etc/ld.so.conf.d/
