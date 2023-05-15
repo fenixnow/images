@@ -82,7 +82,7 @@ if [ -x "/usr/bin/chromedriver" ]; then
     DEFAULT_CAPABILITIES=$DEFAULT_CAPABILITIES',"chromedriverExecutable": "/usr/bin/chromedriver"'
 fi
 
-/opt/node_modules/.bin/appium --base-path=/wd/hub -p "$PORT" -bp "$BOOTSTRAP_PORT" --log-timestamp --log-no-colors --command-timeout 90 --no-reset ${APPIUM_ARGS} --default-capabilities "{$DEFAULT_CAPABILITIES}" &
+/opt/node_modules/.bin/appium --base-path=/wd/hub -p "$PORT" -cp "$BOOTSTRAP_PORT" --log-timestamp --log-no-colors ${APPIUM_ARGS} --default-capabilities "{$DEFAULT_CAPABILITIES}" &
 APPIUM_PID=$!
 
 wait
