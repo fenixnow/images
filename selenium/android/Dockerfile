@@ -18,7 +18,7 @@ ARG APPIUM_VERSION="2.0.0-beta.66"
 RUN \
     apt update && \
     apt install -y apt-transport-https ca-certificates tzdata locales curl gnupg && \
-    	curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
+    	curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
 	apt install -y --no-install-recommends \
 	    curl \
 	    iproute2 \
