@@ -39,7 +39,6 @@ RUN \
     apt-get clean && \
     rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
 
-WORKDIR /
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
 	sudo apt-get install -y nodejs
 
