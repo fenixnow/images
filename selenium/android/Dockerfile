@@ -13,11 +13,12 @@ RUN \
 
 FROM ubuntu:20.04
 
-ARG APPIUM_VERSION="1.22.3"
+ARG APPIUM_VERSION="2.0.0-beta.66"
 
 RUN \
     apt update && \
     apt install -y apt-transport-https ca-certificates tzdata locales curl gnupg && \
+    	curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
 	apt install -y --no-install-recommends \
 	    curl \
 	    iproute2 \
@@ -26,6 +27,7 @@ RUN \
 	    xvfb \
 	    wget \
 	    npm \
+	    nodejs \
 	    libpulse0 \
 		libxcomposite1 \
 		libxcursor1 \
@@ -38,9 +40,6 @@ RUN \
 	    libglib2.0-0 && \
     apt-get clean && \
     rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
-
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
-	sudo apt-get install -y nodejs
 
 RUN npm install -g npm@latest && npm install -g appium@$APPIUM_VERSION
 RUN appium driver install uiautomator2
