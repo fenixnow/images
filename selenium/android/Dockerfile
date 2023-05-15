@@ -54,7 +54,7 @@ ENV ANDROID_HOME /opt/android-sdk
 ENV ANDROID_SDK_ROOT $ANDROID_HOME
 ENV PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin
 ENV PATH ${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/emulator:$PATH
-ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/gles_swiftshader:${ANDROID_HOME}/emulator/lib64/qt/lib:${ANDROID_HOME}/emulator/lib64/vulkan:${LD_LIBRARY_PATH}
+# ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/gles_swiftshader:${ANDROID_HOME}/emulator/lib64/qt/lib:${ANDROID_HOME}/emulator/lib64/vulkan:${LD_LIBRARY_PATH}
 
 # ARG ANDROID_DEVICE="Nexus 4"
 ARG REPLACE_IMG="y"
