@@ -1,5 +1,7 @@
 FROM golang:1.20 as go
 
+EXPOSE 5900
+
 COPY tmp/devtools /devtools
 
 RUN \
