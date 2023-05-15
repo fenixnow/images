@@ -186,7 +186,7 @@ emulator_image_type=${emulator_image_info[2]}
 sed -i.bak "s|@AVD_NAME@|$avd_name|g" "$TMP_DIR/entrypoint.sh"
 sed -i.bak "s|@PLATFORM@|$platform|g" "$TMP_DIR/entrypoint.sh"
 
-android_device=$(request_answer "Specify device preset name if needed (e.g. \"Nexus 4\"): "Nexus 4")
+android_device=$(request_answer "Specify device preset name if needed (e.g. \"Nexus 4\"):" "Nexus 4")
 sdcard_size=$(request_answer "Specify SD card size, Mb:" 64)
 userdata_size=$(request_answer "Specify userdata.img size, Mb:" 64)
 
