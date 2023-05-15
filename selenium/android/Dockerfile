@@ -56,10 +56,10 @@ ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib6
 
 ARG ANDROID_DEVICE="Nexus 5"
 ARG REPLACE_IMG="y"
-ARG AVD_NAME="android6.0-1"
+ARG AVD_NAME="android11.0-1"
 ARG BUILD_TOOLS="build-tools;34.0.0-rc4"
-ARG PLATFORM="android-23"
-ARG EMULATOR_IMAGE="system-images;android-23;default;x86"
+ARG PLATFORM="android-30"
+ARG EMULATOR_IMAGE="system-images;android-30;default;x86"
 ARG EMULATOR_IMAGE_TYPE="default"
 ARG ANDROID_ABI="x86"
 ARG SDCARD_SIZE="64"
