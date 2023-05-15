@@ -22,6 +22,7 @@ RUN \
 	apt install -y --no-install-recommends \
 	    curl \
 	    iproute2 \
+	    npm \
 	    nodejs \
 	    openjdk-11-jdk \
 	    unzip \
