@@ -1,6 +1,8 @@
 #!/bin/bash
 MAX_ATTEMPTS=5
 adb root
+adb kill-server
+adb start-server
 adb devices | grep emulator | cut -f1 | while read id; do
     apks=(/usr/bin/*.apk)
     for apk in "${apks[@]}"; do
