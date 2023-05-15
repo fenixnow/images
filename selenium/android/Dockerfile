@@ -18,16 +18,14 @@ ARG APPIUM_VERSION="1.22.3"
 RUN \
     apt update && \
     apt install -y apt-transport-https ca-certificates tzdata locales curl gnupg && \
-# 	curl --silent --location https://deb.nodesource.com/setup_16.x | bash - && \
 	apt install -y --no-install-recommends \
 	    curl \
 	    iproute2 \
-	    npm \
-	    nodejs \
 	    openjdk-11-jdk \
 	    unzip \
 	    xvfb \
 	    wget \
+	    npm \
 	    libpulse0 \
 		libxcomposite1 \
 		libxcursor1 \
@@ -42,8 +40,10 @@ RUN \
     rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
 
 WORKDIR /
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
+	sudo apt-get install -y nodejs
 
-RUN npm install -g npm@latest && npm update && npm install -g appium@$APPIUM_VERSION
+RUN npm install -g npm@latest && npm install -g appium@$APPIUM_VERSION
 RUN appium driver install uiautomator2
 
 # COPY android.conf /etc/ld.so.conf.d/
