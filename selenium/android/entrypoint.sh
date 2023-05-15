@@ -11,6 +11,7 @@ SCREEN_RESOLUTION=${SCREEN_RESOLUTION:-"1920x1080x24"}
 SKIN=${SKIN:-"1080x1920"}
 STOP=""
 VERBOSE=${VERBOSE:-""}
+ENABLE_VNC="true"
 
 if [ -z "$VERBOSE" ]; then
     if [ -z "$APPIUM_ARGS" ]; then
