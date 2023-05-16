@@ -7,6 +7,8 @@ adb start-server
 adb devices | grep emulator | cut -f1 | while read id; do
 #    adb shell am start -n net.sanapeli.adbchangelanguage/.AdbChangeLanguage -e language ru
 #     adb shell "setprop persist.sys.locale ru-RU; setprop ctl.restart zygote"
+    adb shell "setprop persist.sys.language ru; setprop persist.sys.country RU; stop; sleep 5; start"
+    sleep 10
     apks=(/usr/bin/*.apk)
     for apk in "${apks[@]}"; do
         if [ -r "$apk" ]; then
