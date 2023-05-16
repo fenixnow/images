@@ -87,7 +87,7 @@ RUN \
 	echo "no" | ( \
 	    ([ -n "$ANDROID_DEVICE" ] && avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --device "$ANDROID_DEVICE" --sdcard /sdcard.img ) || \
 	    avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --sdcard /sdcard.img \
-    ) && \
+	) && \ 
 	ldconfig && \
 	( \
 	    resize2fs /root/.android/avd/$AVD_NAME.avd/userdata.img "$USERDATA_SIZE"M || \
@@ -96,8 +96,17 @@ RUN \
 	([ -z "$REPLACE_IMG" ] || mv /root/.android/avd/$AVD_NAME.avd/userdata.img /root/.android/avd/$AVD_NAME.avd/userdata-qemu.img ) && \
 	rm ${ANDROID_SDK_ROOT}/system-images/$PLATFORM/$EMULATOR_IMAGE_TYPE/"$ANDROID_ABI"/userdata.img
 
-COPY ["Emulator.conf", "/root/.config/Android Open Source Project/Emulator.conf"]
+# modify config.ini
+RUN \
+	sed -i 's/hw.mainKeys = yes/hw.mainKeys = no/g' /root/.android/avd/$AVD_NAME.avd/config.ini	&& \
+	sed -i 's/hw.keyboard = no/hw.keyboard = yes/g' /root/.android/avd/$AVD_NAME.avd/config.ini	&& \
+	echo 'skin.dynamic = yes' >> /root/.android/avd/$AVD_NAME.avd/config.ini && \
+	echo 'skin.name = nexus_4' >> /root/.android/avd/$AVD_NAME.avd/config.ini && \
+	echo 'skin.path = /opt/android-sdk/skins/' >> /root/.android/avd/$AVD_NAME.avd/config.ini
+
+#COPY ["Emulator.conf", "/root/.config/Android Open Source Project/Emulator.conf"]
 COPY emulator-snapshot.sh tmp/chromedriver* *.apk /usr/bin/
+COPY skins/ $ANDROID_HOME/skins/
 
 # Entrypoint
 COPY tmp/entrypoint.sh /
