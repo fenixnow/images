@@ -61,7 +61,8 @@ if [ "$ENABLE_VNC" != "true" ] && [ "$ENABLE_VIDEO" != "true" ]; then
     EMULATOR_ARGS="$EMULATOR_ARGS -no-window"
 fi
 # ANDROID_AVD_HOME=/root/.android/avd DISPLAY="$DISPLAY" emulator ${EMULATOR_ARGS} -change-language ru -timezone Europe/Moscow -verbose -writable-system -no-boot-anim -no-audio -no-snapshot-save -ranchu -avd @AVD_NAME@ -sdcard /sdcard.img -gpu swiftshader_indirect &
-ANDROID_AVD_HOME=/root/.android/avd DISPLAY="$DISPLAY" 
+ANDROID_AVD_HOME=/root/.android/avd 
+DISPLAY="$DISPLAY" 
 emulator ${EMULATOR_ARGS} -verbose -avd @AVD_NAME@ -writable-system -gpu swiftshader_indirect -timezone Europe/Moscow -accel on &
 
 EMULATOR_PID=$!

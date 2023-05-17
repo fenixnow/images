@@ -58,7 +58,7 @@ ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib6
 ENV VK_ICD_FILENAMES ${ANDROID_HOME}/emulator/lib64/vulkan/vk_swiftshader_icd.json:${VK_ICD_FILENAMES}
 
 ARG ANDROID_DEVICE="Nexus 4"
-ARG ANDROID_SKIN=$(echo "$ANDROID_DEVICE" | sed -r "s/[A-Z]/\L&/g;s/\s/_/g")
+ARG ANDROID_SKIN="nexus_4"
 ARG REPLACE_IMG="y"
 ARG AVD_NAME="android11.0-1"
 ARG BUILD_TOOLS="build-tools;34.0.0-rc4"
@@ -68,9 +68,6 @@ ARG EMULATOR_IMAGE_TYPE="default"
 ARG ANDROID_ABI="x86"
 ARG SDCARD_SIZE="64"
 ARG USERDATA_SIZE="64"
-
-RUN echo "$ANDROID_SKIN" && sleep 10
-RUN sleep 10
 
 RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" && \
 	mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
@@ -86,7 +83,9 @@ RUN echo y | sdkmanager "cmdline-tools;latest" "platform-tools"
 RUN echo y | sdkmanager "$BUILD_TOOLS"
 RUN echo y | sdkmanager "platforms;$PLATFORM"
 RUN echo y | sdkmanager "$EMULATOR_IMAGE"
-	
+
+COPY skins/ $ANDROID_HOME/skins/
+
 RUN mksdcard "$SDCARD_SIZE"M sdcard.img
 RUN \	
 	echo "no" | ( \
@@ -111,7 +110,6 @@ RUN \
 
 COPY ["Emulator.conf", "/root/.config/Android Open Source Project/Emulator.conf"]
 COPY emulator-snapshot.sh tmp/chromedriver* *.apk /usr/bin/
-COPY skins/ $ANDROID_HOME/skins/
 
 # Entrypoint
 COPY tmp/entrypoint.sh /
