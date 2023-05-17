@@ -209,7 +209,7 @@ if [ -n "$chromedriver_version" ]; then
     fi
 fi
 
-tag=$(request_answer "Specify image tag:" "browsers/$image_name:$default_tag")
+tag=$(request_answer "Specify image tag:" "harbor.svc.vkusvill.ru/browsers/$image_name:$default_tag")
 need_quickboot=$(request_answer "Add Android quick boot snapshot?" "y")
 
 if [ -n "$chromedriver_version" ]; then
