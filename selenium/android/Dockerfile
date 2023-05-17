@@ -69,6 +69,8 @@ ARG ANDROID_ABI="x86"
 ARG SDCARD_SIZE="64"
 ARG USERDATA_SIZE="64"
 
+RUN echo "$ANDROID_SKIN" && sleep 10
+
 RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" && \
 	mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
 	mkdir ${ANDROID_SDK_ROOT}/platforms && \
