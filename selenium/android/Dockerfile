@@ -89,8 +89,9 @@ COPY skins/ $ANDROID_HOME/skins/
 RUN mksdcard "$SDCARD_SIZE"M sdcard.img
 RUN \	
 	echo "no" | ( \
-	    ([ -n "$ANDROID_DEVICE" ] && avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --device "$ANDROID_DEVICE" --skin "$ANDROID_SKIN" --sdcard /sdcard.img ) || \
-	    avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --sdcard /sdcard.img \
+		avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --device "$ANDROID_DEVICE" --skin "$ANDROID_SKIN" --sdcard /sdcard.img \
+		# ([ -n "$ANDROID_DEVICE" ] && avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --device "$ANDROID_DEVICE" --skin "$ANDROID_SKIN" --sdcard /sdcard.img ) || \
+	    # avdmanager create avd -n "$AVD_NAME" -k "$EMULATOR_IMAGE" --abi "$ANDROID_ABI" --sdcard /sdcard.img \
 	) && \ 
 	ldconfig && \
 	( \
