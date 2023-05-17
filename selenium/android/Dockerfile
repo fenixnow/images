@@ -58,7 +58,7 @@ ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib6
 ENV VK_ICD_FILENAMES ${ANDROID_HOME}/emulator/lib64/vulkan/vk_swiftshader_icd.json:${VK_ICD_FILENAMES}
 
 ARG ANDROID_DEVICE="Nexus 4"
-ARG ANDROID_SKIN=$(echo "$ANDROID_DEVICE" | sed -r 's/[A-Z]/\L&/g;s/\s/_/g')
+ARG ANDROID_SKIN=$(echo "$ANDROID_DEVICE" | sed -r "s/[A-Z]/\L&/g;s/\s/_/g")
 ARG REPLACE_IMG="y"
 ARG AVD_NAME="android11.0-1"
 ARG BUILD_TOOLS="build-tools;34.0.0-rc4"
@@ -70,6 +70,7 @@ ARG SDCARD_SIZE="64"
 ARG USERDATA_SIZE="64"
 
 RUN echo "$ANDROID_SKIN" && sleep 10
+RUN sleep 10
 
 RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" && \
 	mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
