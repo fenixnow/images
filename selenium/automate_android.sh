@@ -249,3 +249,8 @@ set +x
 if [ "y" == "$chrome_mobile" ]; then
     test_image "$tag"
 fi
+
+read -r -p "Push?" yn
+if [ "$yn" == "y" ]; then
+    docker push "$tag"
+fi
