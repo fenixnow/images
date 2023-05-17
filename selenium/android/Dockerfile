@@ -55,8 +55,10 @@ ENV ANDROID_SDK_ROOT $ANDROID_HOME
 ENV PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin
 ENV PATH ${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/emulator:$PATH
 ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/gles_swiftshader:${ANDROID_HOME}/emulator/lib64/qt/lib:${ANDROID_HOME}/emulator/lib64/vulkan:${LD_LIBRARY_PATH}
+ENV VK_ICD_FILENAMES ${ANDROID_HOME}/emulator/lib64/vulkan/vk_swiftshader_icd.json:${VK_ICD_FILENAMES}
 
 ARG ANDROID_DEVICE="Nexus 4"
+ARG ANDROID_SKIN=$(echo "$ANDROID_DEVICE" | sed -r 's/[A-Z]/\L&/g;s/\s/_/g')
 ARG REPLACE_IMG="y"
 ARG AVD_NAME="android11.0-1"
 ARG BUILD_TOOLS="build-tools;34.0.0-rc4"
