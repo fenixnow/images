@@ -54,7 +54,7 @@ ENV ANDROID_HOME /opt/android-sdk
 ENV ANDROID_SDK_ROOT $ANDROID_HOME
 ENV PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin
 ENV PATH ${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/emulator:$PATH
-# ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/gles_swiftshader:${ANDROID_HOME}/emulator/lib64/qt/lib:${ANDROID_HOME}/emulator/lib64/vulkan:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/gles_swiftshader:${ANDROID_HOME}/emulator/lib64/qt/lib:${ANDROID_HOME}/emulator/lib64/vulkan:${LD_LIBRARY_PATH}
 
 # ARG ANDROID_DEVICE="Nexus 4"
 ARG REPLACE_IMG="y"
@@ -99,10 +99,10 @@ RUN \
 # modify config.ini
 RUN \
 	sed -i 's/hw.mainKeys=yes/hw.mainKeys=no/g' /root/.android/avd/$AVD_NAME.avd/config.ini	&& \
-	sed -i 's/hw.keyboard=no/hw.keyboard=yes/g' /root/.android/avd/$AVD_NAME.avd/config.ini && \
-	echo 'skin.dynamic=yes' >> /root/.android/avd/$AVD_NAME.avd/config.ini && \
-	echo 'skin.name=nexus_4' >> /root/.android/avd/$AVD_NAME.avd/config.ini && \
-	echo 'skin.path=/opt/android-sdk/skins/nexus_4' >> /root/.android/avd/$AVD_NAME.avd/config.ini
+	sed -i 's/hw.keyboard=no/hw.keyboard=yes/g' /root/.android/avd/$AVD_NAME.avd/config.ini
+	# echo 'skin.dynamic=yes' >> /root/.android/avd/$AVD_NAME.avd/config.ini && \
+	# echo 'skin.name=nexus_4' >> /root/.android/avd/$AVD_NAME.avd/config.ini && \
+	# echo 'skin.path=/opt/android-sdk/skins/nexus_4' >> /root/.android/avd/$AVD_NAME.avd/config.ini
 
 COPY ["Emulator.conf", "/root/.config/Android Open Source Project/Emulator.conf"]
 COPY emulator-snapshot.sh tmp/chromedriver* *.apk /usr/bin/
