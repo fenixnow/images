@@ -75,7 +75,7 @@ fi
 while [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != "1" ] && [ -z "$STOP" ] ; do sleep 1; done
 if [ -n "$STOP" ]; then exit 0; fi
 
-DEFAULT_CAPABILITIES='"platformName": "Android", "automationName": "uiautomator2"'
+DEFAULT_CAPABILITIES='"platformName": "Android", "appium:automationName": "uiautomator2"'
 if [ -n "@CHROME_MOBILE@" ]; then
     while ip addr | grep inet | grep -q tentative > /dev/null; do sleep 0.1; done
     DEFAULT_CAPABILITIES=$DEFAULT_CAPABILITIES', "chromedriverPort": '$CHROMEDRIVER_PORT
