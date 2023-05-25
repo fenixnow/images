@@ -186,7 +186,9 @@ emulator_image_type=${emulator_image_info[2]}
 sed -i.bak "s|@AVD_NAME@|$avd_name|g" "$TMP_DIR/entrypoint.sh"
 sed -i.bak "s|@PLATFORM@|$platform|g" "$TMP_DIR/entrypoint.sh"
 
-android_device=$(request_answer "Specify device preset name if needed (e.g. \"Nexus 4\"):" "Nexus 4")
+android_device=$(request_answer "Specify device preset name if needed (e.g. \"pixel_3\"):" "pixel_3")
+android_skin=$(request_answer "Specify device skin if needed (e.g. \"pixel_3\"):" $(echo $android_device | sed -r "s/[A-Z]/\L&/g;s/\s/_/g"))
+
 sdcard_size=$(request_answer "Specify SD card size, Mb:" 64)
 userdata_size=$(request_answer "Specify userdata.img size, Mb:" 64)
 
@@ -209,7 +211,7 @@ if [ -n "$chromedriver_version" ]; then
     fi
 fi
 
-tag=$(request_answer "Specify image tag:" "browsers/$image_name:$default_tag")
+tag=$(request_answer "Specify image tag:" "harbor.svc.vkusvill.ru/browsers/$image_name:$default_tag")
 need_quickboot=$(request_answer "Add Android quick boot snapshot?" "y")
 
 if [ -n "$chromedriver_version" ]; then
@@ -223,6 +225,7 @@ tmp_tag="$tag"_tmp
 docker build -t "$tmp_tag" \
     --build-arg APPIUM_VERSION="$appium_version" \
     --build-arg ANDROID_DEVICE="$android_device" \
+    --build-arg ANDROID_SKIN="$android_skin" \
     --build-arg REPLACE_IMG="$replace_img" \
     --build-arg AVD_NAME="$avd_name" \
     --build-arg BUILD_TOOLS="$build_tools" \
@@ -248,4 +251,9 @@ set +x
 
 if [ "y" == "$chrome_mobile" ]; then
     test_image "$tag"
+fi
+
+read -r -p "Push?" yn
+if [ "$yn" == "y" ]; then
+    docker push "$tag"
 fi

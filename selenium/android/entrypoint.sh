@@ -8,7 +8,7 @@ PORT=${PORT:-"4444"}
 DISPLAY_NUM=99
 export DISPLAY=":$DISPLAY_NUM"
 SCREEN_RESOLUTION=${SCREEN_RESOLUTION:-"1920x1080x24"}
-#SKIN=${SKIN:-"WXGA720"}
+SKIN=${SKIN:-"nexus_4"}
 STOP=""
 VERBOSE=${VERBOSE:-""}
 ENABLE_VNC="true"
@@ -60,7 +60,11 @@ if [ -n "$STOP" ]; then exit 0; fi
 if [ "$ENABLE_VNC" != "true" ] && [ "$ENABLE_VIDEO" != "true" ]; then
     EMULATOR_ARGS="$EMULATOR_ARGS -no-window"
 fi
-ANDROID_AVD_HOME=/root/.android/avd DISPLAY="$DISPLAY" emulator ${EMULATOR_ARGS} -timezone Europe/Moscow -verbose -writable-system -no-boot-anim -no-audio -no-snapshot-save -ranchu -avd @AVD_NAME@ -sdcard /sdcard.img -gpu swiftshader_indirect &
+# ANDROID_AVD_HOME=/root/.android/avd DISPLAY="$DISPLAY" emulator ${EMULATOR_ARGS} -change-language ru -timezone Europe/Moscow -verbose -writable-system -no-boot-anim -no-audio -no-snapshot-save -ranchu -avd @AVD_NAME@ -sdcard /sdcard.img -gpu swiftshader_indirect &
+ANDROID_AVD_HOME=/root/.android/avd 
+DISPLAY="$DISPLAY" 
+emulator ${EMULATOR_ARGS} -verbose -avd @AVD_NAME@ -writable-system -gpu swiftshader_indirect -timezone Europe/Moscow -accel on &
+
 EMULATOR_PID=$!
 
 if [ "$ENABLE_VNC" == "true" ]; then
@@ -71,7 +75,7 @@ fi
 while [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != "1" ] && [ -z "$STOP" ] ; do sleep 1; done
 if [ -n "$STOP" ]; then exit 0; fi
 
-DEFAULT_CAPABILITIES=''
+DEFAULT_CAPABILITIES='"platformName": "Android", "appium:automationName": "uiautomator2"'
 if [ -n "@CHROME_MOBILE@" ]; then
     while ip addr | grep inet | grep -q tentative > /dev/null; do sleep 0.1; done
     DEFAULT_CAPABILITIES=$DEFAULT_CAPABILITIES', "chromedriverPort": '$CHROMEDRIVER_PORT
@@ -83,7 +87,7 @@ if [ -x "/usr/bin/chromedriver" ]; then
     DEFAULT_CAPABILITIES=$DEFAULT_CAPABILITIES',"chromedriverExecutable": "/usr/bin/chromedriver"'
 fi
 
-appium --base-path=/wd/hub -p "$PORT" -cp "$BOOTSTRAP_PORT" --log-timestamp --log-no-colors ${APPIUM_ARGS} --default-capabilities {$DEFAULT_CAPABILITIES} &
+appium -p "$PORT" -cp "$BOOTSTRAP_PORT" --log-timestamp --log-no-colors ${APPIUM_ARGS} --default-capabilities "{$DEFAULT_CAPABILITIES}" &
 APPIUM_PID=$!
 
 wait
